@@ -44,7 +44,7 @@ public class CategoryController {
         Category entity = new Category();
         BeanUtils.copyProperties(dto, entity);
 
-        entity = categoryService.save(entity);
+        entity = categoryService.update(id,entity);
 
         dto.setId(entity.getId());
         return new ResponseEntity<>(dto, HttpStatus.CREATED);
