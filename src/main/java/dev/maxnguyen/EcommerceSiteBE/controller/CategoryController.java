@@ -7,10 +7,13 @@ import dev.maxnguyen.EcommerceSiteBE.service.MapValidationErrorService;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.data.domain.Pageable;
 
 @RestController
 @RequestMapping("/api/v1/categories")
@@ -48,5 +51,22 @@ public class CategoryController {
 
         dto.setId(entity.getId());
         return new ResponseEntity<>(dto, HttpStatus.CREATED);
+    }
+
+    @GetMapping()
+    public ResponseEntity<?> getCategory(){
+        return new ResponseEntity<>(categoryService.findAll(), HttpStatus.OK);
+    }
+
+    @GetMapping("/page")
+    public ResponseEntity<?> getCategory(
+            @PageableDefault(size = 5, sort = "name", direction = Sort.Direction.ASC)
+            Pageable pageable){
+        return new ResponseEntity<>(categoryService.findAll(pageable), HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}/get")
+    public ResponseEntity<?> getCategory(@PathVariable("id") Long id){
+        return new ResponseEntity<>(categoryService.findById(id), HttpStatus.OK);
     }
 }
