@@ -12,3 +12,5 @@ public class CategoryDto implements Serializable {
     private String name;
     private CategoryStatus status;
 }
+
+//This is file to get the body data from Client request
